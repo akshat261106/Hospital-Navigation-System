@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Indoor Navigation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .swipeable {
+            touch-action: pan-y;
+        }
+        .landmark-card {
+            transition: transform 0.3s ease;
+        }
+        .swiped-right {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        .path-line {
+            stroke-dasharray: 5,5;
+            animation: dash 1s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -10;
+            }
+        }
+        .pulse-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-blue-600 text-white p-4 shadow-lg">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <!-- Back button (shown only while navigating) -->
+                    <button id="backBtn" class="hidden md:inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-white">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-xl font-bold">Hospital Navigation</h1>
+                        <p class="text-sm opacity-90" id="currentLocation">Registration Counter</p>
+                    </div>
+                </div>
+                <button id="menuBtn" class="p-2 hover:bg-blue-700 rounded">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Map Container -->
+        <div class="flex-1 relative bg-white overflow-hidden" id="mapContainer">
+            <svg id="mapSvg" class="w-full h-full" viewBox="0 0 800 600">
+                <!-- Background grid -->
+                <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)"/>
+                
+                <!-- Hospital rooms/landmarks -->
+                <g id="rooms"></g>
+                
+                <!-- Navigation path -->
+                <path id="navigationPath" d="" stroke="#4285F4" stroke-width="4" fill="none" 
+                      stroke-linecap="round" stroke-linejoin="round" class="path-line" opacity="0"/>
+                
+                <!-- Current location marker -->
+                <circle id="currentMarker" cx="100" cy="300" r="8" fill="#34A853" class="pulse-dot"/>
+                <circle id="currentMarkerOuter" cx="100" cy="300" r="12" fill="#34A853" opacity="0.3"/>
+                
+                <!-- Destination marker -->
+                <circle id="destMarker" cx="700" cy="200" r="10" fill="#EA4335"/>
+                <circle id="destMarkerOuter" cx="700" cy="200" r="16" fill="#EA4335" opacity="0.3"/>
+                
+                <!-- Landmark markers along path -->
+                <g id="landmarkMarkers"></g>
+                
+                <!-- Navigation pointer (animated arrow) -->
+                <g id="navPointer"></g>
+            </svg>
+            
+            <!-- Navigation Info Overlay -->
+            <div id="navInfo" class="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 hidden">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-route text-blue-600"></i>
+                    <span class="font-semibold">Navigation Active</span>
+                </div>
+                <div class="text-sm text-gray-600">
+                    <p>Distance: <span id="distance">0</span> m</p>
+                    <p>ETA: <span id="eta">0</span> min</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Destination Selection Panel -->
+        <div id="destinationPanel" class="bg-white p-4 shadow-lg border-t">
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Select Destination</label>
+                <select id="destinationSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Choose a destination...</option>
+                    <option value="ab-ward">AB Ward</option>
+                    <option value="emergency">Emergency Services</option>
+                    <option value="xray">X-Ray Department</option>
+                    <option value="lab">Central Lab</option>
+                    <option value="pharmacy">Pharmacy</option>
+                    <option value="canteen">Canteen</option>
+                </select>
+            </div>
+            <button id="startBtn" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors">
+                <i class="fas fa-play mr-2"></i>Start Navigation
+            </button>
+        </div>
+
+        <!-- Landmark Swipe Card -->
+        <div id="landmarkCard" class="fixed bottom-0 left-0 right-0 bg-white shadow-2xl rounded-t-3xl p-6 hidden transform translate-y-full transition-transform duration-300">
+            <div class="flex items-center justify-center mb-4">
+                <div class="w-12 h-1 bg-gray-300 rounded-full"></div>
+            </div>
+            <div class="text-center mb-4">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-map-marker-alt text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800" id="landmarkName">Landmark Name</h3>
+                <p class="text-sm text-gray-600 mt-1" id="landmarkDescription">You have reached this landmark</p>
+            </div>
+            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                <p class="text-sm text-gray-700 text-center">
+                    <i class="fas fa-hand-pointer text-blue-600"></i>
+                    Swipe right to confirm you've reached this location
+                </p>
+            </div>
+            <div class="flex gap-3">
+                <button id="skipBtn" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300">
+                    Skip
+                </button>
+                <div id="swipeArea" class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold text-center cursor-grab active:cursor-grabbing swipeable">
+                    <i class="fas fa-arrow-right mr-2"></i>Swipe Right
+                </div>
+            </div>
+        </div>
+
+        <!-- Destination Reached Modal -->
+        <div id="reachedModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-2xl p-8 max-w-sm mx-4 text-center">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-green-600 text-4xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Destination Reached!</h2>
+                <p class="text-gray-600 mb-6">You have successfully reached your destination.</p>
+                <button id="closeModalBtn" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

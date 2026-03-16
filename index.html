@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospital Indoor Navigation</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+body{background:linear-gradient(135deg,#eef3ff,#f9fbff);color:#333}
+
+header{
+background:#2b7de9;
+color:white;
+padding:18px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+header h2{font-weight:600}
+
+nav a{
+color:white;
+text-decoration:none;
+margin:0 12px;
+font-weight:500;
+transition:0.3s
+}
+
+nav a:hover{opacity:0.8}
+
+.hero{
+height:420px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:10px;
+color:#1a2a52
+}
+
+.hero p{
+font-size:18px;
+color:#555
+}
+
+.search-box{
+margin-top:25px;
+display:flex;
+gap:10px
+}
+
+.search-box input{
+padding:12px 14px;
+width:300px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:15px
+}
+
+.find-location-container{margin-top:30px}
+
+.find-location-btn{
+font-size:18px;
+padding:16px 28px;
+border:none;
+border-radius:10px;
+background:#2b7de9;
+color:white;
+cursor:pointer;
+font-weight:600;
+animation:pulse 2s infinite;
+box-shadow:0 8px 20px rgba(43,125,233,0.4);
+transition:0.3s;
+}
+
+.find-location-btn:hover{
+transform:scale(1.05);
+box-shadow:0 12px 30px rgba(43,125,233,0.6);
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(43,125,233,0.6)}
+70%{box-shadow:0 0 0 18px rgba(43,125,233,0)}
+100%{box-shadow:0 0 0 0 rgba(43,125,233,0)}
+}
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:8px;
+background:#2b7de9;
+color:white;
+font-size:15px;
+cursor:pointer;
+transition:0.25s
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 14px rgba(0,0,0,0.15)
+}
+
+.cta-buttons{
+margin-top:20px
+}
+
+.features{
+padding:50px 60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+text-align:center;
+transition:0.3s
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 16px 35px rgba(0,0,0,0.12)
+}
+
+.card-icon{
+font-size:34px;
+margin-bottom:10px
+}
+
+.card h3{
+margin-bottom:8px;
+color:#1a2a52
+}
+
+.card p{
+font-size:14px;
+color:#666
+}
+
+.section-title{
+text-align:center;
+font-size:28px;
+margin-top:10px;
+margin-bottom:30px;
+color:#1a2a52
+}
+
+.info-section{
+padding:40px 60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:30px
+}
+
+.info-box{
+background:white;
+padding:25px;
+border-radius:14px;
+box-shadow:0 8px 20px rgba(0,0,0,0.07)
+}
+
+footer{
+margin-top:40px;
+background:#1a2a52;
+color:white;
+text-align:center;
+padding:20px
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+justify-content:center;
+align-items:center
+}
+
+.modal-content{
+background:white;
+padding:30px;
+border-radius:12px;
+text-align:center;
+width:320px
+}
+
+.close-btn{
+margin-top:15px;
+background:#e74c3c
+}
+</style>
+</head>
+<body>
+
+<header>
+<h2>Hospital Navigation</h2>
+<nav>
+<a href="index.html">Home</a>
+<a href="services.html">Services</a>
+<a href="facilities.html">Facilities</a>
+<a href="help.html">Help</a>
+
+</nav>
+</header>
+
+<section class="hero">
+<h1>Navigate the Hospital Easily</h1>
+<p>Find doctors, departments and facilities quickly.</p>
+
+<div class="find-location-container">
+<button class="find-location-btn" onclick="startNavigation()">📍 Find Your Location in the Hospital</button>
+</div>
+
+
+</section>
+
+<h2 class="section-title" id="features">About Our Hospital</h2>
+
+<section class="features">
+
+<div class="card">
+<div class="card-icon">🏥</div>
+<h3>Modern Infrastructure</h3>
+<p>Our hospital is equipped with advanced medical infrastructure, modern operation theatres, and specialized diagnostic centers to ensure accurate treatment and patient safety.</p>
+</div>
+
+<div class="card">
+<div class="card-icon">👨‍⚕️</div>
+<h3>Experienced Doctors</h3>
+<p>We have a team of highly qualified doctors and medical specialists dedicated to providing the best healthcare services to every patient.</p>
+</div>
+
+<div class="card">
+<div class="card-icon">🕒</div>
+<h3>24/7 Emergency Services</h3>
+<p>Our emergency department operates 24 hours a day to provide immediate medical assistance for critical situations.</p>
+</div>
+
+<div class="card">
+<div class="card-icon">🧪</div>
+<h3>Advanced Diagnostics</h3>
+<p>Facilities like MRI, CT Scan, X‑Ray, and pathology labs are available inside the hospital for fast and reliable diagnosis.</p>
+</div>
+
+<div class="card">
+<div class="card-icon">💙</div>
+<h3>Patient‑Centered Care</h3>
+<p>We focus on compassionate care, patient comfort, and clear communication to make the hospital experience easier for patients and their families.</p>
+</div>
+
+<div class="card">
+<div class="card-icon">🧭</div>
+<h3>Indoor Navigation Support</h3>
+<p>This system helps patients easily locate departments, doctors, and facilities within the hospital building without confusion.</p>
+</div>
+
+</section>
+
+<h2 class="section-title">Hospital Highlights</h2>
+
+<section class="info-section">
+
+<div class="info-box">
+<h3>150+ Beds</h3>
+<p>Spacious wards and private rooms designed for patient comfort and recovery.</p>
+</div>
+
+<div class="info-box">
+<h3>20+ Departments</h3>
+<p>Specialized departments including cardiology, orthopedics, radiology, and pathology.</p>
+</div>
+
+<div class="info-box">
+<h3>Experienced Staff</h3>
+<p>Professional nurses, technicians, and support staff available for patient care.</p>
+</div>
+
+<div class="info-box">
+<h3>Modern Equipment</h3>
+<p>Advanced medical technology to ensure precise diagnosis and effective treatment.</p>
+</div>
+
+</section>
+
+<h2 class="section-title" id="facilities">Important Patient Facilities</h2>
+
+<section class="info-section">
+
+<div class="info-box">
+<h3>Pharmacy</h3>
+<p>Locate the nearest medical store inside hospital.</p>
+</div>
+
+<div class="info-box">
+<h3>Billing Counter</h3>
+<p>Quick directions to billing and payment desks.</p>
+</div>
+
+<div class="info-box">
+<h3>Help Desk</h3>
+<p>Get assistance for appointments and navigation.</p>
+</div>
+
+</section>
+
+<footer id="help">
+<p>Hospital Indoor Navigation System | Patient Portal</p>
+</footer>
+
+<div class="modal" id="popup">
+<div class="modal-content">
+<h3 id="popupText">Message</h3>
+<button class="close-btn" onclick="closePopup()">Close</button>
+</div>
+</div>
+
+<script>
+
+function showPopup(msg){
+ document.getElementById('popupText').innerText = msg;
+ document.getElementById('popup').style.display = 'flex';
+}
+
+function closePopup(){
+ document.getElementById('popup').style.display = 'none';
+}
+
+/* When user clicks Find Location */
+
+function startNavigation(){
+ window.location.href = "login.html";
+}
+
+</script>
+
+</body>
+</html>

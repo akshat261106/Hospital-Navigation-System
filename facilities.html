@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hospital Facilities</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#eef3ff,#f9fbff);
+}
+
+/* Navbar */
+
+header{
+background:#2b7de9;
+color:white;
+padding:18px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-weight:500;
+}
+
+/* Title */
+
+.title{
+text-align:center;
+padding:50px 20px;
+}
+
+.title h1{
+font-size:36px;
+color:#1a2a52;
+}
+
+/* Facilities */
+
+.facilities-container{
+padding:40px 60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.facility-card{
+background:white;
+padding:30px;
+border-radius:16px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+text-align:center;
+transition:0.3s;
+}
+
+.facility-card:hover{
+transform:translateY(-10px);
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+.icon{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.location{
+margin-top:10px;
+color:#2b7de9;
+font-weight:500;
+background:#eef4ff;
+padding:8px;
+border-radius:8px;
+}
+
+/* Footer */
+
+footer{
+margin-top:40px;
+background:#1a2a52;
+color:white;
+text-align:center;
+padding:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h2>Hospital Navigation</h2>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="services.html">Services</a>
+<a href="facilities.html">Facilities</a>
+<a href="help.html">Help</a>
+</nav>
+
+</header>
+
+<section class="title">
+
+<h1>Hospital Facilities</h1>
+<p>Locate important hospital facilities easily</p>
+
+</section>
+
+<section class="facilities-container">
+
+<div class="facility-card">
+<div class="icon">💊</div>
+<h3>Pharmacy</h3>
+<p>Purchase medicines and medical supplies.</p>
+<div class="location">📍 Ground Floor - Main Entrance</div>
+</div>
+
+<div class="facility-card">
+<div class="icon">🚻</div>
+<h3>Washrooms</h3>
+<p>Clean washrooms available for patients.</p>
+<div class="location">📍 Every Floor</div>
+</div>
+
+<div class="facility-card">
+<div class="icon">☕</div>
+<h3>Cafeteria</h3>
+<p>Food and beverages for visitors and patients.</p>
+<div class="location">📍 2nd Floor - East Wing</div>
+</div>
+
+<div class="facility-card">
+<div class="icon">💳</div>
+<h3>Billing Counter</h3>
+<p>Payment and billing services.</p>
+<div class="location">📍 Ground Floor - Reception</div>
+</div>
+
+<div class="facility-card">
+<div class="icon">🧑‍💼</div>
+<h3>Help Desk</h3>
+<p>Information and assistance for patients.</p>
+<div class="location">📍 Ground Floor - Lobby</div>
+</div>
+
+<div class="facility-card">
+<div class="icon">🛗</div>
+<h3>Elevators</h3>
+<p>Access hospital floors quickly.</p>
+<div class="location">📍 Central Corridor</div>
+</div>
+
+</section>
+
+<footer>
+
+<p>Hospital Indoor Navigation System | Facilities</p>
+
+</footer>
+
+</body>
+
+</html>
+
+

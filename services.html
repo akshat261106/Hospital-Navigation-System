@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hospital Services</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#eef3ff,#f9fbff);
+}
+
+/* Navbar */
+
+header{
+background:#2b7de9;
+color:white;
+padding:18px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-weight:500;
+}
+
+/* Title */
+
+.title{
+text-align:center;
+padding:50px 20px;
+}
+
+.title h1{
+font-size:36px;
+color:#1a2a52;
+}
+
+/* Services */
+
+.services-container{
+padding:40px 60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.service-card{
+background:white;
+padding:30px;
+border-radius:16px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+text-align:center;
+transition:0.3s;
+}
+
+.service-card:hover{
+transform:translateY(-10px);
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+.icon{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.doctor{
+margin-top:8px;
+font-weight:500;
+color:#444;
+}
+
+.location{
+margin-top:8px;
+color:#2b7de9;
+font-weight:500;
+background:#eef4ff;
+padding:8px;
+border-radius:8px;
+}
+
+/* Footer */
+
+footer{
+margin-top:40px;
+background:#1a2a52;
+color:white;
+text-align:center;
+padding:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h2>Hospital Navigation</h2>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="services.html">Services</a>
+<a href="facilities.html">Facilities</a>
+<a href="help.html">Help</a>
+</nav>
+
+</header>
+
+<section class="title">
+
+<h1>Medical Services</h1>
+<p>Advanced medical services available for patients</p>
+
+</section>
+
+<section class="services-container">
+
+<div class="service-card">
+<div class="icon">🧠</div>
+<h3>MRI Scan</h3>
+<p>Detailed imaging for brain and body scans.</p>
+<div class="doctor">👨‍⚕️ Dr. Arjun Mehta</div>
+<div class="location">📍 Radiology Dept - 2nd Floor</div>
+</div>
+
+<div class="service-card">
+<div class="icon">🩻</div>
+<h3>X-Ray</h3>
+<p>Used for bone fracture detection.</p>
+<div class="doctor">👨‍⚕️ Dr. Neha Sharma</div>
+<div class="location">📍 Imaging Lab - Ground Floor</div>
+</div>
+
+<div class="service-card">
+<div class="icon">🧬</div>
+<h3>CT Scan</h3>
+<p>Advanced diagnostic imaging.</p>
+<div class="doctor">👨‍⚕️ Dr. Rohit Gupta</div>
+<div class="location">📍 Diagnostic Center - 1st Floor</div>
+</div>
+
+<div class="service-card">
+<div class="icon">🫀</div>
+<h3>ECG Test</h3>
+<p>Heart activity monitoring.</p>
+<div class="doctor">👨‍⚕️ Dr. Priya Kapoor</div>
+<div class="location">📍 Cardiology Dept - 1st Floor</div>
+</div>
+
+<div class="service-card">
+<div class="icon">🧪</div>
+<h3>Blood Test</h3>
+<p>Laboratory tests for diagnosis.</p>
+<div class="doctor">👨‍⚕️ Dr. Karan Malhotra</div>
+<div class="location">📍 Pathology Lab - Ground Floor</div>
+</div>
+
+<div class="service-card">
+<div class="icon">🦴</div>
+<h3>Orthopedic Consultation</h3>
+<p>Treatment for bone and joint problems.</p>
+<div class="doctor">👨‍⚕️ Dr. Anjali Verma</div>
+<div class="location">📍 Orthopedic OPD - 3rd Floor</div>
+</div>
+
+</section>
+
+<footer>
+
+<p>Hospital Indoor Navigation System | Medical Services</p>
+
+</footer>
+
+</body>
+
+</html>
+

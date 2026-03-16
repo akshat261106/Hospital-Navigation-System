@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help & Support</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#eef3ff,#f9fbff);
+color:#333;
+}
+
+/* Header */
+
+header{
+background:#2b7de9;
+color:white;
+padding:18px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+font-weight:500;
+}
+
+/* Title */
+
+.title{
+text-align:center;
+padding:50px 20px;
+}
+
+.title h1{
+font-size:36px;
+color:#1a2a52;
+}
+
+.title p{
+margin-top:10px;
+color:#555;
+}
+
+/* Help Cards */
+
+.help-container{
+padding:40px 60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.help-card{
+background:white;
+padding:30px;
+border-radius:16px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+text-align:center;
+transition:0.3s;
+}
+
+.help-card:hover{
+transform:translateY(-8px);
+box-shadow:0 14px 30px rgba(0,0,0,0.15);
+}
+
+.icon{
+font-size:40px;
+margin-bottom:10px;
+}
+
+/* FAQ */
+
+.faq{
+padding:40px 60px;
+}
+
+.faq h2{
+text-align:center;
+margin-bottom:25px;
+color:#1a2a52;
+}
+
+.faq-item{
+background:white;
+padding:18px;
+margin-bottom:15px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+cursor:pointer;
+}
+
+.faq-answer{
+display:none;
+margin-top:10px;
+color:#555;
+}
+
+/* Contact Form */
+
+.contact{
+padding:40px 60px;
+}
+
+.contact h2{
+text-align:center;
+margin-bottom:25px;
+color:#1a2a52;
+}
+
+form{
+max-width:500px;
+margin:auto;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+input, textarea{
+padding:12px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+padding:12px;
+border:none;
+background:#2b7de9;
+color:white;
+border-radius:8px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1e5fbf;
+}
+
+footer{
+margin-top:40px;
+background:#1a2a52;
+color:white;
+text-align:center;
+padding:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Hospital Navigation</h2>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="services.html">Services</a>
+<a href="facilities.html">Facilities</a>
+<a href="help.html">Help</a>
+</nav>
+
+</header>
+
+<section class="title">
+
+<h1>Help & Support</h1>
+<p>Need assistance? We are here to guide you.</p>
+
+</section>
+
+<section class="help-container">
+
+<div class="help-card">
+<div class="icon">📞</div>
+<h3>Contact Support</h3>
+<p>Call our help desk for navigation assistance.</p>
+<p><b>+91 98765 43210</b></p>
+</div>
+
+<div class="help-card">
+<div class="icon">🏥</div>
+<h3>Help Desk Location</h3>
+<p>Ground Floor near the Main Entrance.</p>
+</div>
+
+<div class="help-card">
+<div class="icon">🚑</div>
+<h3>Emergency Help</h3>
+<p>Quick route guidance to emergency ward.</p>
+</div>
+
+</section>
+
+<section class="faq">
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq-item" onclick="toggleFAQ(this)">
+Where can I find my doctor's room?
+<div class="faq-answer">
+Use the doctor search option on the home page to find the location.
+</div>
+</div>
+
+<div class="faq-item" onclick="toggleFAQ(this)">
+How do I use QR navigation?
+<div class="faq-answer">
+Scan QR codes placed in hospital corridors to detect your location.
+</div>
+</div>
+
+<div class="faq-item" onclick="toggleFAQ(this)">
+Where is the pharmacy located?
+<div class="faq-answer">
+You can find the pharmacy using the facility locator.
+</div>
+</div>
+
+</section>
+
+<section class="contact">
+
+<h2>Send Us Your Query</h2>
+
+<form onsubmit="submitForm(event)">
+
+<input type="text" placeholder="Your Name" required>
+
+<input type="email" placeholder="Your Email" required>
+
+<textarea rows="4" placeholder="Your Message"></textarea>
+
+<button type="submit">Submit</button>
+
+</form>
+
+</section>
+
+<footer>
+
+<p>Hospital Indoor Navigation System | Help Center</p>
+
+</footer>
+
+<script>
+
+function toggleFAQ(element){
+
+let answer = element.querySelector(".faq-answer");
+
+answer.style.display =
+answer.style.display === "block" ? "none" : "block";
+
+}
+
+function submitForm(event){
+
+event.preventDefault();
+
+alert("Your message has been submitted. Our team will contact you soon.");
+
+}
+
+</script>
+
+</body>
+</html>
+```
