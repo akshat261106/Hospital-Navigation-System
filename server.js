@@ -18,7 +18,7 @@ dns.setServers(['8.8.8.8', '8.8.4.4']);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // MongoDB Connection
 const MONGODB_URI = 'mongodb+srv://akshatg693:akshat123@cluster0.wvl0jqb.mongodb.net/?appName=Cluster0';
@@ -461,7 +461,8 @@ app.post("/api/google-login", async (req, res) => {
 //   res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
 // });
 app.use(cors({
-  origin: "https://extraordinary-frangollo-98fade.netlify.app/"
+  origin: "https://extraordinary-frangollo-98fade.netlify.app",
+  credentials: true
 }));
 // ============================================================================
 // ERROR HANDLING
