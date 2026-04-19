@@ -454,13 +454,15 @@ app.post("/api/google-login", async (req, res) => {
 // STATIC FILES
 // ============================================================================
 
-app.use(express.static(path.join(__dirname, 'frontend/dist')));
+// app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
-// Fallback to index.html for SPA
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
-});
-
+// // Fallback to index.html for SPA
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
+// });
+app.use(cors({
+  origin: "https://extraordinary-frangollo-98fade.netlify.app/"
+}));
 // ============================================================================
 // ERROR HANDLING
 // ============================================================================
