@@ -42,7 +42,7 @@ const User = mongoose.model('User', userSchema);
 
 // Middleware
 app.use(cors({
-  origin: true,
+  origin: "https://extraordinary-frangollo-98fade.netlify.app",
   credentials: true
 }));
 
@@ -450,6 +450,9 @@ app.post("/api/google-login", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("🏥 Hospital Backend is running");
+});
 // ============================================================================
 // STATIC FILES
 // ============================================================================
@@ -460,10 +463,7 @@ app.post("/api/google-login", async (req, res) => {
 // app.get('*', (req, res) => {
 //   res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
 // });
-app.use(cors({
-  origin: "https://extraordinary-frangollo-98fade.netlify.app",
-  credentials: true
-}));
+
 // ============================================================================
 // ERROR HANDLING
 // ============================================================================
