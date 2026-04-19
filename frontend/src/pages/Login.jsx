@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -45,6 +46,54 @@ const Login = () => {
   const handleSignup = () => {
     navigate('/signin');
   };
+//   const handleGoogleSuccess = async (credentialResponse) => {
+//     console.log("Google success", credentialResponse);
+//   try {
+//     const response = await fetch('http://localhost:5000/api/google-login', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({
+//         token: credentialResponse.credential
+//       })
+//     });
+
+//     const data = await response.json();
+
+//     if (response.ok) {
+//       localStorage.setItem('user', JSON.stringify(data.user));
+//       navigate('/location');
+//     }
+
+//   } catch (error) {
+//     console.error("Google login error", error);
+//   }
+// };
+const handleGoogleSuccess = async (credentialResponse) => {
+  console.log("Google success", credentialResponse);
+
+  try {
+    const response = await fetch('http://localhost:5000/api/google-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: credentialResponse.credential
+      })
+    });
+
+    console.log("response", response);
+
+    const data = await response.json();
+    console.log("data", data);
+
+    if (response.ok) {
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/location');
+    }
+
+  } catch (error) {
+    console.error("Google login error", error);
+  }
+};
 
   return (
     <main className="login-container">
@@ -81,6 +130,13 @@ const Login = () => {
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
         
+        <div style={{ marginTop: "15px", display: "flex", justifyContent: "center" }}>
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={() => console.log("Google Login Failed")}
+            />
+        </div>
+
         <p className="signup-text">
           Don't have an account? <button type="button" className="signup-link" onClick={handleSignup}>Sign up here</button>
         </p>

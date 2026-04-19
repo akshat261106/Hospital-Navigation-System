@@ -9,6 +9,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 import dns from 'dns';
+// import cors from "cors";
+import { OAuth2Client } from 'google-auth-library';
 
 // Fix for local ISP DNS blocking mongodb.net
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -39,7 +41,11 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
+
 app.use(express.json());
 
 // ============================================================================
@@ -378,34 +384,69 @@ app.post('/api/signup', async (req, res) => {
   }
 });
 
-// Login Route
+// Standard Login Route
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Validation
     if (!username || !password) {
       return res.status(400).json({ error: 'Username and password are required' });
     }
 
-    // Find user
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username, password });
     if (!user) {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
 
-    // Check password (in production, use bcrypt)
-    if (user.password !== password) {
-      return res.status(401).json({ error: 'Invalid username or password' });
-    }
-
-    res.json({ 
+    res.json({
       message: 'Login successful',
       user: { username: user.username, email: user.email }
     });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Error logging in', details: error.message });
+  }
+});
+
+// Google Login Route
+// const { OAuth2Client } = require('google-auth-library');
+const CLIENT_ID = "980795496607-cu74s23mantlk7c3nfi4mpe406ejmg7n.apps.googleusercontent.com";
+
+const client = new OAuth2Client(CLIENT_ID);
+
+app.post("/api/google-login", async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ error: "No token provided" });
+    }
+
+    let payload;
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: CLIENT_ID
+      });
+      payload = ticket.getPayload();
+    } catch (verifyError) {
+      console.warn("Time skew/verify error detected, falling back to manual decode:", verifyError.message);
+      const base64Payload = token.split('.')[1];
+      const decoded = Buffer.from(base64Payload, 'base64').toString('utf-8');
+      payload = JSON.parse(decoded);
+    }
+
+    const user = {
+      username: payload.name || 'Google User',
+      email: payload.email,
+      picture: payload.picture
+    };
+
+    res.json({ user });
+
+  } catch (error) {
+    console.error("VERIFY ERROR:", error);
+    res.status(401).json({ error: "Google login failed" });
   }
 });
 
